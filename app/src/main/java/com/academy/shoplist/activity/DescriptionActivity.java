@@ -1,5 +1,6 @@
 package com.academy.shoplist.activity;
 
+import android.net.Uri;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import com.jherome.linx.shoplist.R;
 import fragment.EditDettaglioFragment;
 import fragment.ViewDettaglioFragment;
 
-public class DescriptionActivity extends AppCompatActivity implements EditDettaglioFragment.Fra{
+public class DescriptionActivity extends AppCompatActivity implements EditDettaglioFragment.OnFragmentInteractionListener{
 
     private EditDettaglioFragment editFragment;
     private ViewDettaglioFragment viewFragment;
@@ -35,7 +36,7 @@ public class DescriptionActivity extends AppCompatActivity implements EditDettag
             editFragment = new EditDettaglioFragment();
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_edit, editFragment, false)
+                  //  .replace(R.id.fragment_edit, editFragment, false)
                     .commit();
 
 
@@ -53,6 +54,11 @@ public class DescriptionActivity extends AppCompatActivity implements EditDettag
 
 
 
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

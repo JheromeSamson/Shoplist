@@ -16,60 +16,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private final static int CURRENT_DB_VERSION = 1;
     protected final Context myContext;
 
-    public DatabaseHelper(Context context){
+    public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, CURRENT_DB_VERSION);
         this.myContext = context;
     }
 
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase){
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion){
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         Log.d("createDatabase", "UPGRADE DB FROM " + oldVersion + "TO " + newVersion);
     }
 
     @Override
-    public void onConfigure(SQLiteDatabase db){
+    public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         if (Build.VERSION.SDK_INT >= 28)
             db.disableWriteAheadLogging();
     }
 
-    public SQLiteDatabase openDataBase() throws SQLException{
+    public SQLiteDatabase openDataBase() throws SQLException {
         String myPath = myContext.getDatabasePath(DB_NAME).getPath();
         return SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
-    public void createDatabase() throws IOException{
+    public void createDatabase() throws IOException {
         boolean dbExist = checkDataBase();
-        SQLiteDatabase db =this.getReadableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         if (!dbExist)
             createShopListDB(db);
     }
 
-    private boolean checkDataBase(){
+    private boolean checkDataBase() {
         File database = myContext.getDatabasePath(DB_NAME);
         return database.exists();
     }
 
-    private void createShopListDB(SQLiteDatabase database){
+    private void createShopListDB(SQLiteDatabase database) {
         Log.d("createDataBase", "create database" + DB_NAME);
         database.execSQL(DatabaseTables.SQL_CREATE_PRODOTTO);
     }
 
-    private void dropAllTable(SQLiteDatabase database){
+    private void dropAllTable(SQLiteDatabase database) {
         Log.d("createDatabase", "DROP ALL TABLES");
     }
 
-    private void dropTable(SQLiteDatabase database, String table){
-        try{
+    private void dropTable(SQLiteDatabase database, String table) {
+        try {
             String dropTable = "DROP TABLE IF EXISTS" + table + ";";
             database.execSQL(dropTable);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

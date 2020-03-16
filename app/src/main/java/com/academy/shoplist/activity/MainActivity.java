@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //ShoplistDatabaseManager.getInstance(MainActivity.this).addProdotto(new Prodotto(R.drawable.caffe,"nometest","descrizionetest"));
-
+        ShoplistDatabaseManager.getInstance(MainActivity.this).addProdotto(new Prodotto(R.drawable.caffe,"nometest","descrizionetest"));
+        refresh();
 
         FloatingActionButton aggiungi_prodotto = findViewById(R.id.add_prodotto);
         aggiungi_prodotto.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemDelete(int position) {
+
                    SingletonShopList.getInstance().removeProdotto(position);
                    refresh();
                 }
@@ -94,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.RecycleView);
         mRecyclerView.setHasFixedSize(true);
         mLayout = new LinearLayoutManager(this);
-        mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
+      //  mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
+         mAdapter = new ProdottoAdapter(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()));
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.setAdapter(mAdapter);
     }
