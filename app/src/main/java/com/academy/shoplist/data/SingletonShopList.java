@@ -33,4 +33,7 @@ public class SingletonShopList {
     public void removeProdotto(int position){
         this.prodotto.remove(position);
     }
+
+    public void setEdit(String toString, String toString1, int position) {
+    }
 }
