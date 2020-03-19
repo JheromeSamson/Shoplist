@@ -64,7 +64,8 @@
                 android:layout_height="50dp" app:srcCompat="@android:drawable/ic_menu_delete"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="5dp"
-                android:id="@+id/delete_item"/>
+                android:id="@+id/delete_item"
+                android:onClick="showAlertDialog"/>
 
 
     </RelativeLayout>

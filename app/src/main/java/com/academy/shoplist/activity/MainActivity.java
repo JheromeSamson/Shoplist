@@ -1,5 +1,6 @@
 package com.academy.shoplist.activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -102,5 +103,10 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.setAdapter(mAdapter);
     }
-
+    /*public void showAlertDialog(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle("Conferma eliminazione");
+            alert.setMessage("Sei sicuro di voler eliminare il prodotto?");
+            alert.setPositiveButton("Sì", new )
+    }*/
 }
