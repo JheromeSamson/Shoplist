@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.academy.shoplist.adapter.ProdottoAdapter;
 import com.academy.shoplist.bean.Prodotto;
@@ -20,7 +19,6 @@ import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.data.SingletonShopList;
 import com.academy.shoplist.interfac.ItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import com.academy.shoplist.intentConstant.*;
 
@@ -35,15 +33,18 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager mLayout;
     ArrayList<Prodotto> prodotti = new ArrayList<>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        attivaListener();
+        //ShoplistDatabaseManager.getInstance(MainActivity.this).addProdotto(new Prodotto(R.drawable.caffe,"nometest","descrizionetest"));
+        setUp();
 
-        ShoplistDatabaseManager.getInstance(MainActivity.this).addProdotto(new Prodotto(R.drawable.caffe,"nometest","descrizionetest"));
-        refresh();
 
         FloatingActionButton aggiungi_prodotto = findViewById(R.id.add_prodotto);
+
         aggiungi_prodotto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,14 +59,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        refresh();
+        attivaListener();
 
+
+    }
+
+    private void attivaListener() {
+        setUp();
         mAdapter.setOnItemClickListener(new ItemClickListener() {
-
-            Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
 
             @Override
             public void onItemClick(int position) {
+                Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
                     descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
@@ -74,34 +79,36 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemDelete(int position) {
-
-                   //SingletonShopList.getInstance().removeProdotto(position);
                     ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdotto(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()).get(position));
 
-                    refresh();
-                   SingletonShopList.getInstance().removeProdotto(position);
-                   refresh();
+                    SingletonShopList.getInstance().removeProdotto(position);
+                    attivaListener();
                 }
 
                 @Override
                 public void onItemEdit(int position) {
+                    Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
                     descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.EDITITEMREQUESTCODE);
+                    attivaListener();
                 }
 
 
         });
     }
 
-    public void refresh(){
+    public void setUp(){
 
         mRecyclerView = findViewById(R.id.RecycleView);
         mRecyclerView.setHasFixedSize(true);
         mLayout = new LinearLayoutManager(this);
         mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
+        mAdapter = new ProdottoAdapter(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()));
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.setAdapter(mAdapter);
+
+
     }
     /*public void showAlertDialog(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);

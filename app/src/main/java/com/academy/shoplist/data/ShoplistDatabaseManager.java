@@ -84,8 +84,8 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         database.beginTransaction();
         try {
             // database.delete(DbCostants.PRODOTTI_TABLE,DbCostants.PRODOTTI_TABLE_NOME,new String[]{nomeProdotto});
-            database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {prodotto.getNome()});
-            database.setTransactionSuccessful();
+            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {prodotto.getNome()}));
+                    database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
