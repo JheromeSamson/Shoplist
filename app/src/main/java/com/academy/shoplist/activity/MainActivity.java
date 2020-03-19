@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.RecycleView);
         mRecyclerView.setHasFixedSize(true);
         mLayout = new LinearLayoutManager(this);
-        mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
+        //mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
         mAdapter = new ProdottoAdapter(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()));
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.setAdapter(mAdapter);

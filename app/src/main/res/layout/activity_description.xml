@@ -4,19 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
     tools:context="com.academy.shoplist.activity.DescriptionActivity">
 
     <FrameLayout
-        android:id="@+id/editContainer"
-        android:layout_weight="1"
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <FrameLayout
-        android:id="@+id/viewContainer"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
 
 <!--

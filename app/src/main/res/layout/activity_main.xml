@@ -11,7 +11,8 @@
         android:id="@+id/add_prodotto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
+        android:layout_alignRight="@id/RecycleView"
+        android:layout_alignBottom="@id/RecycleView"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.recyclerview.widget.RecyclerView

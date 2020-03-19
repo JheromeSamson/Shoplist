@@ -35,7 +35,7 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.viewContainer,viewFragment);
+            fragmentTransaction.replace(R.id.container,viewFragment);
             fragmentTransaction.commit();
         }
 
@@ -44,7 +44,7 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
             editFragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.editContainer, editFragment)
+                    .replace(R.id.container, editFragment)
                     .commit();
         }
 
