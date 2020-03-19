@@ -61,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
 
         mAdapter.setOnItemClickListener(new ItemClickListener() {
 
-               @Override
-               public void onItemClick(int position) {
+            Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
 
-                    Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
+            @Override
+            public void onItemClick(int position) {
                     descriptionIntent.putExtra("position", position);
+                    descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
 
                 }
@@ -77,18 +78,18 @@ public class MainActivity extends AppCompatActivity {
                     ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdotto(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()).get(position));
 
                     refresh();
+                   SingletonShopList.getInstance().removeProdotto(position);
+                   refresh();
                 }
 
                 @Override
                 public void onItemEdit(int position) {
-                    SingletonShopList.getInstance().removeProdotto(position);
-                    Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
                     descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.EDITITEMREQUESTCODE);
-                    refresh();
-
                 }
+
+
         });
     }
 
@@ -97,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.RecycleView);
         mRecyclerView.setHasFixedSize(true);
         mLayout = new LinearLayoutManager(this);
-      //  mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
-         mAdapter = new ProdottoAdapter(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()));
+        mAdapter = new ProdottoAdapter(SingletonShopList.getInstance().prodotto);
         mRecyclerView.setLayoutManager(mLayout);
         mRecyclerView.setAdapter(mAdapter);
     }

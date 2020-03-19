@@ -1,17 +1,18 @@
 package com.academy.shoplist.activity;
 
-import android.net.Uri;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
-import com.academy.shoplist.bean.Prodotto;
-import com.academy.shoplist.data.SingletonShopList;
+
 import com.academy.shoplist.intentConstant.Constant;
+import com.academy.shoplist.interfac.FragmentListener;
 import com.jherome.linx.shoplist.R;
 import fragment.EditDettaglioFragment;
 import fragment.ViewDettaglioFragment;
 
-public class DescriptionActivity extends AppCompatActivity implements EditDettaglioFragment.OnFragmentInteractionListener{
+public class DescriptionActivity extends AppCompatActivity implements FragmentListener {
 
     private EditDettaglioFragment editFragment;
     private ViewDettaglioFragment viewFragment;
@@ -21,23 +22,50 @@ public class DescriptionActivity extends AppCompatActivity implements EditDettag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_description);
 
-        Bundle extra= getIntent().getExtras();
-
+        Bundle extra = getIntent().getExtras();
         int codice = extra.getInt("codiceFragment");
+        int position = extra.getInt("position");
+
+        Bundle args = new Bundle();
+        args.putInt("position", position);
 
         if (codice == Constant.VIEWITEMREQUESTCODE){
-
             viewFragment = new ViewDettaglioFragment();
+            viewFragment.setArguments(args);
 
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.viewContainer,viewFragment);
+            fragmentTransaction.commit();
         }
 
         if (codice == Constant.EDITITEMREQUESTCODE) {
-
             editFragment = new EditDettaglioFragment();
+            editFragment.setArguments(args);
 
             getSupportFragmentManager().beginTransaction()
-                  //  .replace(R.id.fragment_edit, editFragment, false)
+                    .replace(R.id.editContainer, editFragment)
                     .commit();
+        }
+
+
+  /*      //FragmentManager fragmentManager = getSupportFragmentManager();
+        //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        Bundle extra= getIntent().getExtras();
+
+        int codice = extra.getInt("codiceFragment");
+            TextView descriptionClickedToShow = (TextView) findViewById(R.id.descriptionClicked);
+
+        if (codice == Constant.EDITITEMREQUESTCODE){
+            editFragment = new EditDettaglioFragment();
+
+            //.add(R.id.view, viewFragment);
+            //fragmentTransaction.commit();
+        }
+
+        if (codice == Constant.VIEWITEMREQUESTCODE) {
+
 
 
             int position=extra.getInt("position");
@@ -48,17 +76,11 @@ public class DescriptionActivity extends AppCompatActivity implements EditDettag
             TextView descriptionClickedToShow = (TextView) findViewById(R.id.descriptionClicked);
 
             nameClickedToShow.setText(p.getNome());
-            descriptionClickedToShow.setText(p.getDescrizione());
+            descriptionClickedToShow.setText(p.getDescrizione());*/
         }
 
-
-
-
-
-    }
-
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public int onItemClicked(int position) {
+        return 0;
     }
 }

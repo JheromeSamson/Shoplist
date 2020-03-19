@@ -10,60 +10,68 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.academy.shoplist.interfac.FragmentEditListener;
+import com.academy.shoplist.bean.Prodotto;
+import com.academy.shoplist.data.SingletonShopList;
+import com.academy.shoplist.interfac.FragmentListener;
 import com.jherome.linx.shoplist.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EditDettaglioFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EditDettaglioFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class EditDettaglioFragment extends Fragment {
 
-    private EditText editName;
-    private EditText editDescription;
+    private TextView editname;
+    private TextView editDescrizione;
+
+    private int position;
     private Button confirm_Edit_Button;
-    private FragmentEditListener listener;
+    private FragmentListener listener;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_edit_dettaglio, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit, container, false);
 
-        editName = v.findViewById(R.id.editName);
-        editDescription = v.findViewById(R.id.editDescription);
+        if(getArguments() != null){
+            position = getArguments().getInt("position");
+        }
 
-        confirm_Edit_Button = v.findViewById(R.id.confirm_edit);
+        Prodotto p = SingletonShopList.getInstance().getProdottoByPosition(position);
+
+        ((TextView) v.findViewById(R.id.editName)).setText(p.getNome());
+        ((TextView) v.findViewById(R.id.editDescription)).setText(p.getDescrizione());
+
+        editname = (TextView) v.findViewById(R.id.editName);
+        editDescrizione = (TextView) v.findViewById(R.id.editDescription);
+
+        confirm_Edit_Button = (Button) v.findViewById(R.id.confirm_edit);
 
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                String name = editName.getText().toString();
-                String descrizione = editDescription.getText().toString();
 
-                listener.onInputEditSent(name,descrizione);
+                SingletonShopList.getInstance().setEdit(editname.getText().toString(),editDescrizione.getText().toString(),position);
+
             }
         });
+
+
         return v;
     }
 
     public void updateEditText(String oldName,String oldDescription){
-        editName.setText(oldName);
-        editName.setText(oldDescription);
+        //editName.setText(oldName);
+        //editDescription.setText(oldDescription);
     }
 
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
-        if (context instanceof  FragmentEditListener){
-            listener = (FragmentEditListener) context;
+        if (context instanceof FragmentListener){
+            listener = (FragmentListener) context;
         }else{
             throw new RuntimeException(context.toString()
             + "MUST IMPLEMENT FRAGMENTEDITLISTENER");
@@ -148,9 +156,9 @@ public class EditDettaglioFragment extends Fragment {
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
-     **/
+     *
     public interface OnFragmentInteractionListener {
-
+        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
+    } */
 }
