@@ -1,9 +1,8 @@
 package com.academy.shoplist.activity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.widget.ImageButton;
-import android.widget.Toast;
+import android.content.DialogInterface;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.academy.shoplist.adapter.ProdottoAdapter;
 import com.academy.shoplist.bean.Prodotto;
@@ -71,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-                    descriptionIntent.putExtra("position", position);
+                String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                    descriptionIntent.putExtra("nome prodotto", nome_prodotto);
                     descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
 
@@ -79,16 +80,17 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemDelete(int position) {
-                    ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdotto(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()).get(position));
+                    String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                    showAlertDialog(nome_prodotto);
 
-                    SingletonShopList.getInstance().removeProdotto(position);
-                    attivaListener();
                 }
 
                 @Override
                 public void onItemEdit(int position) {
                     Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-                    descriptionIntent.putExtra("position", position);
+                    String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+
+                    descriptionIntent.putExtra("nome prodotto", nome_prodotto);
                     descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.EDITITEMREQUESTCODE);
                     attivaListener();
@@ -110,10 +112,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    /*public void showAlertDialog(View v){
+    public void showAlertDialog(final String nome){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-            alert.setTitle("Conferma eliminazione");
-            alert.setMessage("Sei sicuro di voler eliminare il prodotto?");
-            alert.setPositiveButton("Sì", new )
-    }*/
+        alert.setTitle("Conferma eliminazione");
+        alert.setMessage("Sei sicuro di voler eliminare il prodotto:" + nome + "?");
+        alert.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdottoByName(nome);
+                attivaListener();
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                Toast.makeText(MainActivity.this, nome+ "non è stato eliminato.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alert.create().show();
+    }
 }

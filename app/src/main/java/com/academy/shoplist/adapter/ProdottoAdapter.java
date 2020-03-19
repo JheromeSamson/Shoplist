@@ -21,7 +21,7 @@ import com.jherome.linx.shoplist.R;
 
 public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.ProdottoViewHolder> {
 
-     private ArrayList<Prodotto>prodotti= new ArrayList<>();
+     public ArrayList<Prodotto>prodotti= new ArrayList<>();
      private ItemClickListener mListener;
 
     public static class ProdottoViewHolder extends RecyclerView.ViewHolder{

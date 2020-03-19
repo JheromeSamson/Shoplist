@@ -24,10 +24,10 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
 
         Bundle extra = getIntent().getExtras();
         int codice = extra.getInt("codiceFragment");
-        int position = extra.getInt("position");
+        String nome = extra.getString("nome prodotto");
 
         Bundle args = new Bundle();
-        args.putInt("position", position);
+        args.putString("nome prodotto", nome);
 
         if (codice == Constant.VIEWITEMREQUESTCODE){
             viewFragment = new ViewDettaglioFragment();

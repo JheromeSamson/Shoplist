@@ -80,11 +80,11 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         return cursore;
     }
 
-    public void deleteProdotto(Prodotto prodotto){
+    public void deleteProdottoByName(String nome_prodotto){
         database.beginTransaction();
         try {
             // database.delete(DbCostants.PRODOTTI_TABLE,DbCostants.PRODOTTI_TABLE_NOME,new String[]{nomeProdotto});
-            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {prodotto.getNome()}));
+            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {nome_prodotto}));
                     database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
