@@ -73,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemDelete(int position) {
 
-                   SingletonShopList.getInstance().removeProdotto(position);
-                   refresh();
+                   //SingletonShopList.getInstance().removeProdotto(position);
+                    ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdotto(ShoplistDatabaseManager.getInstance(MainActivity.this).getProdottiByCursor(ShoplistDatabaseManager.getInstance(MainActivity.this).getAllProdotti()).get(position));
+
+                    refresh();
                 }
 
                 @Override

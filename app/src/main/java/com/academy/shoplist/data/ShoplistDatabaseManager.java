@@ -59,7 +59,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
                 cursore.getCount() != 0) {
 
             while (cursore.moveToNext()) {
-                Prodotto prodotto = new Prodotto(8, "", "");
+                Prodotto prodotto = new Prodotto();
 
                 prodotto.setNome(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_NOME)));
                 prodotto.setDescrizione(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_DESCRIZIONE)));
@@ -78,6 +78,19 @@ public class ShoplistDatabaseManager extends DatabaseManager {
     public Cursor getAllProdotti() {
         Cursor cursore = database.query(DbConstant.PRODOTTI_TABLE, null, null, null, null, null, null);
         return cursore;
+    }
+
+    public void deleteProdotto(Prodotto prodotto){
+        database.beginTransaction();
+        try {
+            // database.delete(DbCostants.PRODOTTI_TABLE,DbCostants.PRODOTTI_TABLE_NOME,new String[]{nomeProdotto});
+            database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {prodotto.getNome()});
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            database.endTransaction();
+        }
     }
 
 

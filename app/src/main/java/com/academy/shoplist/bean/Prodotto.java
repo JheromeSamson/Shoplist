@@ -10,6 +10,12 @@ public class Prodotto {
         this.nome = nome;
         this.descrizione = descrizione;
     }
+    public Prodotto(){
+        this.immagine =0;
+        this.nome = "default";
+        this.descrizione = "default";
+
+    }
 
     public int getImmagine() {
         return immagine;
