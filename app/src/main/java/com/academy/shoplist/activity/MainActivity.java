@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         attivaListener();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("My App");
+        setSupportActionBar(toolbar);
 
         FloatingActionButton aggiungi_prodotto = findViewById(R.id.add_prodotto);
 
