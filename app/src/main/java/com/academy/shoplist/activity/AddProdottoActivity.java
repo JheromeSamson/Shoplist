@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.intentConstant.Constant;
+import com.academy.shoplist.util.Uuid;
 import com.jherome.linx.shoplist.R;
 import com.academy.shoplist.bean.Prodotto;
 
@@ -48,9 +49,8 @@ public class AddProdottoActivity extends AppCompatActivity {
         conferma_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Prodotto prodotto = new Prodotto(R.drawable.pizza, nameView.getText().toString(),descriptionView.getText().toString());
-              //  SingletonShopList.getInstance().setProdotto(prodotto);
-                ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(R.drawable.caffe,nameView.getText().toString(),descriptionView.getText().toString()));
+                Uuid uuid = new Uuid();
+                ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(uuid.generaUUID(),R.drawable.caffe,nameView.getText().toString(),descriptionView.getText().toString()));
                 Intent intent = new Intent();
                 setResult(Constant.REQUESTCODE,intent);
                 finish();

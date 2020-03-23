@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.intentConstant.DbConstant;
+import com.academy.shoplist.util.Uuid;
 
 import java.util.ArrayList;
 
@@ -34,8 +35,10 @@ public class ShoplistDatabaseManager extends DatabaseManager {
 
     public void addProdotto(Prodotto prodotto) {
         database.beginTransaction();
+
         try {
             ContentValues values = new ContentValues();
+            values.put(DbConstant.PRODOTTI_TABLE_ID, prodotto.getId());
             values.put(DbConstant.PRODOTTI_TABLE_NOME, prodotto.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, prodotto.getDescrizione());
             database.insert(DbConstant.PRODOTTI_TABLE, null, values);
@@ -80,11 +83,11 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         return cursore;
     }
 
-    public void deleteProdottoByName(String nome_prodotto){
+    public void deleteProdottoById(String id){
         database.beginTransaction();
         try {
             // database.delete(DbCostants.PRODOTTI_TABLE,DbCostants.PRODOTTI_TABLE_NOME,new String[]{nomeProdotto});
-            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_NOME+"=?", new String[] {nome_prodotto}));
+            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_ID+"=?", new String[] {id}));
                     database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();

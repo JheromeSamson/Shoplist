@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.academy.shoplist.adapter.ProdottoAdapter;
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.data.ShoplistDatabaseManager;
-import com.academy.shoplist.data.SingletonShopList;
 import com.academy.shoplist.interfac.ItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -42,9 +41,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         attivaListener();
 
-        setUp();
-
-
         FloatingActionButton aggiungi_prodotto = findViewById(R.id.add_prodotto);
 
         aggiungi_prodotto.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         attivaListener();
 
-
     }
 
     private void attivaListener() {
@@ -77,14 +72,12 @@ public class MainActivity extends AppCompatActivity {
                     descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
-
                 }
 
                 @Override
                 public void onItemDelete(int position) {
-                    String nome_prodotto= mAdapter.prodotti.get(position).getNome();
-                    showAlertDialog(nome_prodotto);
-
+                    //String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                    showAlertDialog(position);
                 }
 
                 @Override
@@ -116,22 +109,23 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void showAlertDialog(final String nome){
+    public void showAlertDialog(final int position){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Conferma eliminazione");
-        alert.setMessage("Sei sicuro di voler eliminare il prodotto:" + nome + "?");
+        alert.setMessage("Sei sicuro di voler eliminare il prodotto:" + mAdapter.prodotti.get(position).getNome() + "?");
         alert.setPositiveButton("Sì", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdottoByName(nome);
+                String id = mAdapter.prodotti.get(position).getId();
+                ShoplistDatabaseManager.getInstance(MainActivity.this).deleteProdottoById(id);
                 attivaListener();
             }
         });
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                Toast.makeText(MainActivity.this, nome+ "non è stato eliminato.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, mAdapter.prodotti.get(position).getNome()+ "non è stato eliminato.", Toast.LENGTH_SHORT).show();
             }
         });
         alert.create().show();

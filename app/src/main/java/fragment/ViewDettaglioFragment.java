@@ -51,7 +51,6 @@ public class ViewDettaglioFragment extends Fragment {
 
     public void updateEditText(int position){
 
-
     }
 
     @Override

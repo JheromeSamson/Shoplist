@@ -62,7 +62,7 @@ public class EditDettaglioFragment extends Fragment {
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Prodotto p2=new Prodotto(p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
+                Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
                 ShoplistDatabaseManager s=ShoplistDatabaseManager.getInstance(getActivity());
                 s.updateProdotto(p,p2);
 
