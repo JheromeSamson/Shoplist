@@ -49,7 +49,7 @@ public class AddProdottoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Prodotto prodotto = new Prodotto(R.drawable.pizza, nameView.getText().toString(),descriptionView.getText().toString());
-                SingletonShopList.getInstance().setProdotto(prodotto);
+              //  SingletonShopList.getInstance().setProdotto(prodotto);
                 ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(R.drawable.caffe,nameView.getText().toString(),descriptionView.getText().toString()));
                 Intent intent = new Intent();
                 setResult(Constant.REQUESTCODE,intent);

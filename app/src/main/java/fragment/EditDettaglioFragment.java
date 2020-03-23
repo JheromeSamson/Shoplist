@@ -1,6 +1,7 @@
 package fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,10 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.academy.shoplist.activity.DescriptionActivity;
+import com.academy.shoplist.activity.MainActivity;
 import com.academy.shoplist.bean.Prodotto;
+import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.data.SingletonShopList;
+import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
 import com.jherome.linx.shoplist.R;
+
+
 
 
 public class EditDettaglioFragment extends Fragment {
@@ -26,6 +33,7 @@ public class EditDettaglioFragment extends Fragment {
     private int position;
     private Button confirm_Edit_Button;
     private FragmentListener listener;
+    public static Prodotto p;
 
 
     @Nullable
@@ -37,9 +45,11 @@ public class EditDettaglioFragment extends Fragment {
 
         if(getArguments() != null){
             position = getArguments().getInt("position");
+
         }
 
-        Prodotto p = SingletonShopList.getInstance().getProdottoByPosition(position);
+         p =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
+            //   SingletonShopList.getInstance().getProdottoByPosition(position);
 
         ((TextView) v.findViewById(R.id.editName)).setText(p.getNome());
         ((TextView) v.findViewById(R.id.editDescription)).setText(p.getDescrizione());
@@ -52,8 +62,10 @@ public class EditDettaglioFragment extends Fragment {
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Prodotto p2=new Prodotto(p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
+                ShoplistDatabaseManager s=ShoplistDatabaseManager.getInstance(getActivity());
+                s.updateProdotto(p,p2);
 
-                SingletonShopList.getInstance().setEdit(editname.getText().toString(),editDescrizione.getText().toString(),position);
 
             }
         });
@@ -61,6 +73,8 @@ public class EditDettaglioFragment extends Fragment {
 
         return v;
     }
+
+
 
     public void updateEditText(String oldName,String oldDescription){
         //editName.setText(oldName);

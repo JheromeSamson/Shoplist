@@ -92,6 +92,24 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
+    public void updateProdotto(Prodotto vecchio,Prodotto nuovo){
+        database.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DbConstant.PRODOTTI_TABLE_NOME, nuovo.getNome());
+            values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, nuovo.getDescrizione());
+            database.update(DbConstant.PRODOTTI_TABLE, values,  "nome = ?",new String []{vecchio.getNome()});
+
+            database.setTransactionSuccessful();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            database.endTransaction();
+        }
+    }
+
 
 
 }

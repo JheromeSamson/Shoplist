@@ -10,7 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.academy.shoplist.activity.DescriptionActivity;
+import com.academy.shoplist.activity.MainActivity;
 import com.academy.shoplist.bean.Prodotto;
+import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.data.SingletonShopList;
 import com.academy.shoplist.interfac.FragmentListener;
 import com.jherome.linx.shoplist.R;
@@ -37,7 +40,8 @@ public class ViewDettaglioFragment extends Fragment {
             position = getArguments().getInt("position");
         }
 
-        Prodotto p = SingletonShopList.getInstance().getProdottoByPosition(position);
+        Prodotto p = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
+
 
         name.setText(p.getNome());
         descrizione.setText(p.getDescrizione());

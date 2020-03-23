@@ -65,6 +65,8 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
                 }
             });
 
+
+
             imageButton_editProdotto.setOnClickListener(new View.OnClickListener(){
 
                 @Override
@@ -73,6 +75,7 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION){
                             listener.onItemEdit(position);
+
                         }
                     }
                 }

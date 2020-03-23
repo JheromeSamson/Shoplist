@@ -26,6 +26,8 @@ import java.util.ArrayList;
 
 import com.jherome.linx.shoplist.R;
 
+import fragment.EditDettaglioFragment;
+
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         attivaListener();
-        //ShoplistDatabaseManager.getInstance(MainActivity.this).addProdotto(new Prodotto(R.drawable.caffe,"nometest","descrizionetest"));
+
         setUp();
 
 
@@ -71,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-                String nome_prodotto= mAdapter.prodotti.get(position).getNome();
-                    descriptionIntent.putExtra("nome prodotto", nome_prodotto);
+               // String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                    descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
 
@@ -87,13 +89,15 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onItemEdit(int position) {
-                    Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
+                Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
                     String nome_prodotto= mAdapter.prodotti.get(position).getNome();
 
-                    descriptionIntent.putExtra("nome prodotto", nome_prodotto);
+                    descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
                     startActivityForResult(descriptionIntent,Constant.EDITITEMREQUESTCODE);
-                    attivaListener();
+
+                     attivaListener();
+
                 }
 
 
