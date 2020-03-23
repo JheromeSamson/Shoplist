@@ -63,7 +63,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
 
             while (cursore.moveToNext()) {
                 Prodotto prodotto = new Prodotto();
-
+                prodotto.setId(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_ID)));
                 prodotto.setNome(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_NOME)));
                 prodotto.setDescrizione(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_DESCRIZIONE)));
                 prodotto.setImmagine(cursore.getInt(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_IMG)));
