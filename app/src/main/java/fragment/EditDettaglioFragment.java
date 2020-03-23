@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +51,6 @@ public class EditDettaglioFragment extends Fragment {
         }
 
          p =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
-            //   SingletonShopList.getInstance().getProdottoByPosition(position);
 
         ((TextView) v.findViewById(R.id.editName)).setText(p.getNome());
         ((TextView) v.findViewById(R.id.editDescription)).setText(p.getDescrizione());
@@ -65,7 +66,6 @@ public class EditDettaglioFragment extends Fragment {
                 Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
                 ShoplistDatabaseManager s=ShoplistDatabaseManager.getInstance(getActivity());
                 s.updateProdotto(p,p2);
-
 
             }
         });
