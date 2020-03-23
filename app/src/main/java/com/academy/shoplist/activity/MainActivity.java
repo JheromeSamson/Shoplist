@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         attivaListener();
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("My App");
+        toolbar.setTitle("Shoplist");
         setSupportActionBar(toolbar);
 
         FloatingActionButton aggiungi_prodotto = findViewById(R.id.add_prodotto);
