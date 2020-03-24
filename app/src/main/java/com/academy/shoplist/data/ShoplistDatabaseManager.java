@@ -103,7 +103,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             ContentValues values = new ContentValues();
             values.put(DbConstant.PRODOTTI_TABLE_NOME, nuovo.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, nuovo.getDescrizione());
-            database.update(DbConstant.PRODOTTI_TABLE, values,  "nome = ?",new String []{vecchio.getNome()});
+            database.update(DbConstant.PRODOTTI_TABLE, values,  "id = ?",new String []{vecchio.getId()});
 
             database.setTransactionSuccessful();
 
@@ -113,7 +113,8 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
-    public void addImmogineProdotto(ImmagineProdotto img){
+
+    public void addImmagineProdotto(ImmagineProdotto img){
 
         try {
             ContentValues cv = new  ContentValues();

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onItemEdit(int position) {
                 Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-                    String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                    //String nome_prodotto= mAdapter.prodotti.get(position).getNome();
 
                     descriptionIntent.putExtra("position", position);
                     descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
