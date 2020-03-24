@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
@@ -16,6 +18,7 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
 
     private EditDettaglioFragment editFragment;
     private ViewDettaglioFragment viewFragment;
+    private Button bottone_ritorno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,17 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
                     .replace(R.id.container, editFragment)
                     .commit();
         }
+
+        bottone_ritorno = (Button) findViewById(R.id.button_return);
+
+        bottone_ritorno.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
 
 
   /*      //FragmentManager fragmentManager = getSupportFragmentManager();
