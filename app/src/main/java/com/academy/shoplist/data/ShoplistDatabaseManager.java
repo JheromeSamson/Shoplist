@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.intentConstant.DbConstant;
 import com.academy.shoplist.util.Uuid;
@@ -112,7 +113,20 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
+    public void addImmogineProdotto(ImmagineProdotto img){
 
+        try {
+            ContentValues cv = new  ContentValues();
+            cv.put(DbConstant.KEY_NAME,   img.getId());
+            cv.put(DbConstant.KEY_IMAGE,   img.getCodImmagine());
+            database.insert( DbConstant.DB_TABLE, null, cv );
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            database.endTransaction();
+        }
+    }
 
 
 }

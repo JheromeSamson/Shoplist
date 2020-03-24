@@ -2,6 +2,10 @@ package com.academy.shoplist.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,24 +13,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
 import com.academy.shoplist.adapter.ProdottoAdapter;
-import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.data.ShoplistDatabaseManager;
+import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.ItemClickListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import com.academy.shoplist.intentConstant.*;
-
-import java.util.ArrayList;
-
 import com.jherome.linx.shoplist.R;
-
-import fragment.EditDettaglioFragment;
 
 
 public class MainActivity extends AppCompatActivity {
