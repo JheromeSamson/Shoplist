@@ -9,8 +9,8 @@ public class DbConstant {
     public static final String PRODOTTI_TABLE_IMG = "immagine";
 
 
-    public static final String DB_TABLE = "immagine";
-    public static final String KEY_NAME = "nomeImmagine";
-    public static final String KEY_IMAGE ="dataImmagine" ;
+    public static final String IMMAGINE_TABLE = "immagine";
+    public static final String IMMAGINE_NAME = "nomeImmagine";
+    public static final String IMMAGINE_DATA ="dataImmagine" ;
 
 }

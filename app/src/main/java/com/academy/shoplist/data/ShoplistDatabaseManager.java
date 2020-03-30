@@ -8,7 +8,6 @@ import android.util.Log;
 import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.intentConstant.DbConstant;
-import com.academy.shoplist.util.Uuid;
 
 import java.util.ArrayList;
 
@@ -118,9 +117,9 @@ public class ShoplistDatabaseManager extends DatabaseManager {
 
         try {
             ContentValues cv = new  ContentValues();
-            cv.put(DbConstant.KEY_NAME,   img.getId());
-            cv.put(DbConstant.KEY_IMAGE,   img.getCodImmagine());
-            database.insert( DbConstant.DB_TABLE, null, cv );
+            cv.put(DbConstant.IMMAGINE_NAME,   img.getId());
+            cv.put(DbConstant.IMMAGINE_DATA,   img.getCodImmagine());
+            database.insert( DbConstant.IMMAGINE_TABLE, null, cv );
             database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
