@@ -42,7 +42,6 @@ public class ViewDettaglioFragment extends Fragment {
 
         Prodotto p = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
-
         name.setText(p.getNome());
         descrizione.setText(p.getDescrizione());
 

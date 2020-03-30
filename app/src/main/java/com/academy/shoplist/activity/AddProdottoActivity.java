@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.util.ControlloInput;
@@ -59,8 +60,15 @@ public class AddProdottoActivity extends AppCompatActivity {
                     Toast.makeText(AddProdottoActivity.this,ControlloInput.validaInput(nameView,descriptionView).get(false),Toast.LENGTH_LONG).show();
 
                 }else if(ControlloInput.validaInput(nameView,descriptionView).containsKey(true)) {
-                    Uuid uuid = new Uuid();
-                    ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(uuid.generaUUID(), R.drawable.caffe, nameView.getText().toString(), descriptionView.getText().toString()));
+                    Uuid uuidProdotto = new Uuid();
+                    String idProdotto = uuidProdotto.generaUUID();
+                    Uuid uuidImmagine = new Uuid();
+                    String idImmagine = uuidProdotto.generaUUID();
+
+                    ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addImmagineProdotto(new ImmagineProdotto(uuidImmagine, nomeImmagine, getBytes()));
+                    ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(idProdotto,idImmagine,nameView.getText().toString(), descriptionView.getText().toString()));
+
+
                     Intent intent = new Intent();
                     setResult(Constant.REQUESTCODE, intent);
                     finish();

@@ -7,12 +7,12 @@ public class DatabaseTables {
             DbConstant.PRODOTTI_TABLE_ID + " TEXT, " +
             DbConstant.PRODOTTI_TABLE_NOME + " TEXT, " +
             DbConstant.PRODOTTI_TABLE_DESCRIZIONE + " TEXT, " +
-            DbConstant.PRODOTTI_TABLE_IMG + " BLOB " +
+            DbConstant.PRODOTTI_TABLE_IMG + " TEXT " +
             " ); ";
 
-    public static final String SQL_CREATE_TABLE_IMAGE ="CREATE TABLE IF NOT EXISTS '" + DbConstant.DB_TABLE+ "' ("+
-            DbConstant.KEY_NAME + " TEXT, " +
-            DbConstant.KEY_IMAGE + " BLOB "+
-           " ); ";
+            DbConstant.FOREIGNKEY_ID + "TEXT" +
+    public static final String SQL_CREATE_TABLE_IMAGE ="CREATE TABLE IF NOT EXISTS '" + DbConstant.NAME_TABLE+ "("+
+            DbConstant.KEY_NAME + " TEXT," +
+            DbConstant.KEY_IMAGE + " BLOB);";
 
 }

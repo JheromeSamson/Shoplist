@@ -67,7 +67,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
                 prodotto.setId(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_ID)));
                 prodotto.setNome(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_NOME)));
                 prodotto.setDescrizione(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_DESCRIZIONE)));
-                prodotto.setImmagine(cursore.getInt(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_IMG)));
+                prodotto.setImmagine(cursore.getString(cursore.getColumnIndex(DbConstant.PRODOTTI_TABLE_IMG)));
                 listaProdotti.add(prodotto);
 
             }
@@ -113,13 +113,13 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
-    public void addImmogineProdotto(ImmagineProdotto img){
+    public void addImmagineProdotto(ImmagineProdotto img){
 
         try {
             ContentValues cv = new  ContentValues();
             cv.put(DbConstant.KEY_NAME,   img.getId());
             cv.put(DbConstant.KEY_IMAGE,   img.getCodImmagine());
-            database.insert( DbConstant.DB_TABLE, null, cv );
+            database.insert( DbConstant.NAME_TABLE, null, cv );
             database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
