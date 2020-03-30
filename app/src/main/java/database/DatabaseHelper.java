@@ -59,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void createShopListDB(SQLiteDatabase database) {
         Log.d("createDataBase", "create database" + DB_NAME);
         database.execSQL(DatabaseTables.SQL_CREATE_PRODOTTO);
-        //database.execSQL(DatabaseTables.SQL_CREATE_TABLE_IMAGE);
+        database.execSQL(DatabaseTables.SQL_CREATE_TABLE_IMAGE);
 
     }
 

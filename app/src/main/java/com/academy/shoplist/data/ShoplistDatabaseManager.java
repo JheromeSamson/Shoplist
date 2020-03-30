@@ -42,6 +42,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             values.put(DbConstant.PRODOTTI_TABLE_ID, prodotto.getId());
             values.put(DbConstant.PRODOTTI_TABLE_NOME, prodotto.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, prodotto.getDescrizione());
+            values.put(DbConstant.PRODOTTI_TABLE_IMG, prodotto.getImmagine());
             database.insert(DbConstant.PRODOTTI_TABLE, null, values);
             Log.i("Elemento inserito ", "Prodotto con nome: " + prodotto.getNome());
             database.setTransactionSuccessful();
@@ -115,9 +116,11 @@ public class ShoplistDatabaseManager extends DatabaseManager {
     }
     public void addImmagineProdotto(ImmagineProdotto img){
 
+
         try {
+            database.beginTransaction();
             ContentValues cv = new  ContentValues();
-            cv.put(DbConstant.KEY_NAME,   img.getId());
+            cv.put(DbConstant.KEY_ID, img.getId());
             cv.put(DbConstant.KEY_IMAGE,   img.getCodImmagine());
             database.insert( DbConstant.NAME_TABLE, null, cv );
             database.setTransactionSuccessful();

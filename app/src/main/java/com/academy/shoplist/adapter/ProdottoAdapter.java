@@ -100,7 +100,7 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
     @Override
     public void onBindViewHolder(@NonNull ProdottoViewHolder holder, int position) {
         Prodotto prodottoCorrente=prodotti.get(position);
-        holder.img_immagine_prodotto.setImageResource(prodottoCorrente.getImmagine());
+        //holder.img_immagine_prodotto.setImageResource(prodottoCorrente.getImmagine());
         holder.textView_nomeProdotto.setText(prodottoCorrente.getNome());
         holder.textView_descrizioneProdotto.setText(prodottoCorrente.getDescrizione());
     }

@@ -6,7 +6,7 @@ public class Uuid {
 
     public static String generaUUID(){
 
-        return java.util.UUID.randomUUID().toString();
+        return java.util.UUID.randomUUID().toString()+System.currentTimeMillis();
 
 
     }
