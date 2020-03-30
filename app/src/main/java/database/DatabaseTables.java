@@ -10,8 +10,9 @@ public class DatabaseTables {
             DbConstant.PRODOTTI_TABLE_IMG + " BLOB " +
             " ); ";
 
-    public static final String SQL_CREATE_TABLE_IMAGE ="CREATE TABLE IF NOT EXISTS '" + DbConstant.DB_TABLE+ "("+
-            DbConstant.KEY_NAME + " TEXT," +
-            DbConstant.KEY_IMAGE + " BLOB);";
+    public static final String SQL_CREATE_TABLE_IMAGE ="CREATE TABLE IF NOT EXISTS '" + DbConstant.DB_TABLE+ "' ("+
+            DbConstant.KEY_NAME + " TEXT, " +
+            DbConstant.KEY_IMAGE + " BLOB "+
+           " ); ";
 
 }
