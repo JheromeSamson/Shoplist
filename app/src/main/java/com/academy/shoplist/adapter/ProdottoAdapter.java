@@ -19,7 +19,6 @@ import com.academy.shoplist.interfac.ItemClickListener;
 
 import java.util.ArrayList;
 
-import com.academy.shoplist.util.DbBitMapUtility;
 import com.jherome.linx.shoplist.R;
 
 public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.ProdottoViewHolder> {
