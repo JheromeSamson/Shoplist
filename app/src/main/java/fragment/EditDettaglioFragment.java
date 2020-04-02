@@ -44,7 +44,8 @@ public class EditDettaglioFragment extends Fragment {
     private Button confirm_Edit_Button;
     private FragmentListener listener;
     public static Prodotto prodottoItem;
-
+public  byte[] rowImage;
+    public ImmagineProdotto imgprodotto;
     static int PReqCode =1;
     static int REQUESTCODE = 1;
     Uri pickedUri;
@@ -68,7 +69,7 @@ public class EditDettaglioFragment extends Fragment {
         ((TextView) v.findViewById(R.id.editName)).setText(prodottoItem.getNome());
         ((TextView) v.findViewById(R.id.editDescription)).setText(prodottoItem.getDescrizione());
         image = v.findViewById(R.id.img_mod);
-        byte [] rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
+         rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
         image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
         editname = (TextView) v.findViewById(R.id.editName);
         editDescrizione = (TextView) v.findViewById(R.id.editDescription);
@@ -126,19 +127,24 @@ public class EditDettaglioFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
 
 
-              try{
+                try {
                     bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), pickedUri);
                     byt = DbBitMapUtility.getBytes(bitmap);
-                }catch (Exception exception){
+                } catch (Exception exception) {
 
                 }
-                Prodotto p2=new Prodotto(prodottoItem.getId(), prodottoItem.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
-                ImmagineProdotto imgprodotto=new ImmagineProdotto(prodottoItem.getImmagine(),byt);
-
+                Prodotto p2 = new Prodotto(prodottoItem.getId(), prodottoItem.getImmagine(), editname.getText().toString(), editDescrizione.getText().toString());
+                if (byt != null) {
+                    imgprodotto = new ImmagineProdotto(prodottoItem.getImmagine(), byt);
+                } else{
+                 imgprodotto=new ImmagineProdotto(prodottoItem.getImmagine(),rowImage);
+            }
                 ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
                 prodotto.updateProdotto(prodottoItem,p2,imgprodotto);
-
+                Toast.makeText(getActivity(), "Modifiche implementate", Toast.LENGTH_SHORT).show();
+                listener.onItemClicked(true);
             }
+
         });
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
