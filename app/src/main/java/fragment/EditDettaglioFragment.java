@@ -137,8 +137,10 @@ public class EditDettaglioFragment extends Fragment {
 
                 ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
                 prodotto.updateProdotto(prodottoItem,p2,imgprodotto);
-
+                Toast.makeText(getActivity(), "Modifiche implementate", Toast.LENGTH_SHORT).show();
+                listener.onItemClicked(true);
             }
+
         });
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
