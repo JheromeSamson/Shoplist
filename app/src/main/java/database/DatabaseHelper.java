@@ -13,7 +13,7 @@ import java.io.IOException;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static String DB_NAME = "shoplist.db";
-    private final static int CURRENT_DB_VERSION = 1;
+    private final static int CURRENT_DB_VERSION = 2;
     protected final Context myContext;
 
     public DatabaseHelper(Context context) {
@@ -62,6 +62,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         database.execSQL(DatabaseTables.SQL_CREATE_TABLE_IMAGE);
 
     }
+
+
+
 
     private void dropAllTable(SQLiteDatabase database) {
         Log.d("createDatabase", "DROP ALL TABLES");

@@ -8,13 +8,15 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.intentConstant.Constant;

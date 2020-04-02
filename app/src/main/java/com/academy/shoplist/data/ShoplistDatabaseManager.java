@@ -8,7 +8,6 @@ import android.util.Log;
 import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.intentConstant.DbConstant;
-import com.academy.shoplist.util.Uuid;
 
 import java.util.ArrayList;
 
@@ -40,6 +39,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         try {
             ContentValues values = new ContentValues();
             values.put(DbConstant.PRODOTTI_TABLE_ID, prodotto.getId());
+
             values.put(DbConstant.PRODOTTI_TABLE_NOME, prodotto.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, prodotto.getDescrizione());
             values.put(DbConstant.PRODOTTI_TABLE_IMG, prodotto.getImmagine());
@@ -85,6 +85,30 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         return cursore;
     }
 
+    public byte[] selectImg(String idImmagine){
+        byte[] risultatoQuery={0};
+
+        database.beginTransaction();
+        try {
+
+            Cursor c = database.rawQuery(" SELECT " + DbConstant.KEY_IMAGE + " FROM " + DbConstant.NAME_TABLE +
+                    " WHERE " + DbConstant.KEY_ID+ " = '" + idImmagine +  "' ;",null);
+            c.moveToFirst();
+            while(!c.isAfterLast()){
+                risultatoQuery= c.getBlob(0);
+                c.moveToNext();
+            }
+                          c.close();
+
+            database.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            database.endTransaction();
+        }
+        return risultatoQuery;
+    }
+
     public void deleteProdottoById(String id){
         database.beginTransaction();
         try {
@@ -104,7 +128,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             ContentValues values = new ContentValues();
             values.put(DbConstant.PRODOTTI_TABLE_NOME, nuovo.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, nuovo.getDescrizione());
-            database.update(DbConstant.PRODOTTI_TABLE, values,  "nome = ?",new String []{vecchio.getNome()});
+            database.update(DbConstant.PRODOTTI_TABLE, values,  "id = ?",new String []{vecchio.getId()});
 
             database.setTransactionSuccessful();
 

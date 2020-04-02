@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.academy.shoplist.activity.AddProdottoActivity;
 import com.academy.shoplist.bean.Prodotto;
+import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.interfac.ItemClickListener;
 
 
@@ -101,7 +103,8 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
     @Override
     public void onBindViewHolder(@NonNull ProdottoViewHolder holder, int position) {
         Prodotto prodottoCorrente=prodotti.get(position);
-        //holder.img_immagine_prodotto.setImageResource(prodottoCorrente.getImmagine());
+       // byte [] a= ShoplistDatabaseManager.getInstance(get).selectImg(prodottoCorrente.getImmagine());
+      //  holder.img_immagine_prodotto.setImageResource(R.drawable.caffe);
         holder.textView_nomeProdotto.setText(prodottoCorrente.getNome());
         holder.textView_descrizioneProdotto.setText(prodottoCorrente.getDescrizione());
     }
