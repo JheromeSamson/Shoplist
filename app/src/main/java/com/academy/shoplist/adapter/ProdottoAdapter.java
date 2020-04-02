@@ -19,6 +19,7 @@ import com.academy.shoplist.interfac.ItemClickListener;
 
 import java.util.ArrayList;
 
+import com.academy.shoplist.util.DbBitMapUtility;
 import com.jherome.linx.shoplist.R;
 
 public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.ProdottoViewHolder> {
@@ -103,8 +104,8 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
     @Override
     public void onBindViewHolder(@NonNull ProdottoViewHolder holder, int position) {
         Prodotto prodottoCorrente=prodotti.get(position);
-        //byte [] a= ShoplistDatabaseManager.getInstance().selectImg(prodottoCorrente.getImmagine());
-        //holder.img_immagine_prodotto.setImageResource(R.drawable.caffe);
+        byte [] a= ShoplistDatabaseManager.getInstance(null).selectImg(prodottoCorrente.getImmagine());
+        holder.img_immagine_prodotto.setImageBitmap(DbBitMapUtility.getImage(a));
         holder.textView_nomeProdotto.setText(prodottoCorrente.getNome());
         holder.textView_descrizioneProdotto.setText(prodottoCorrente.getDescrizione());
     }
