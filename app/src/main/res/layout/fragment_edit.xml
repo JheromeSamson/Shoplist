@@ -94,6 +94,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorAccent"
         android:text="conferma modifica"
+        android:onClick="AlertDialog"
         >
     </Button>
 
