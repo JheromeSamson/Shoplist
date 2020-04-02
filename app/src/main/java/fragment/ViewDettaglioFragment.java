@@ -45,11 +45,22 @@ public class ViewDettaglioFragment extends Fragment {
 
         Prodotto prodotto = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
-        byte [] rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
+        byte [] rowImage;
+
+        if(ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine())!=null){
+
+        rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
+        immagine.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+
+        }
+        else{
+            immagine.setImageResource(R.drawable.ic_add);
+        }
 
         name.setText(prodotto.getNome());
         descrizione.setText(prodotto.getDescrizione());
-        immagine.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+
+
         return v;
 }
 

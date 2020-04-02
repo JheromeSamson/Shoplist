@@ -110,7 +110,6 @@ public class AddProdottoActivity extends AppCompatActivity {
                     } catch (Exception exception){
 
                     }
-
                     ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addImmagineProdotto(new ImmagineProdotto(idImmagine, byt));
                     ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(idProdotto,idImmagine,nameView.getText().toString(), descriptionView.getText().toString()));
 
