@@ -70,7 +70,11 @@ public  byte[] rowImage;
         ((TextView) v.findViewById(R.id.editDescription)).setText(prodottoItem.getDescrizione());
         image = v.findViewById(R.id.img_mod);
          rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
-        image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+         if(rowImage != null) {
+             image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+         }else {
+             image.setImageResource(R.drawable.ic_add);
+         }
         editname = (TextView) v.findViewById(R.id.editName);
         editDescrizione = (TextView) v.findViewById(R.id.editDescription);
 
