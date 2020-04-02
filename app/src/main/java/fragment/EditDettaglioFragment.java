@@ -1,6 +1,8 @@
 package fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.academy.shoplist.activity.DescriptionActivity;
 import com.academy.shoplist.activity.MainActivity;
@@ -62,16 +65,38 @@ public class EditDettaglioFragment extends Fragment {
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
-                ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
-                prodotto.updateProdotto(p,p2);
-
+                AlertDialog(v);
             }
         });
 
 
         return v;
     }
+    public void AlertDialog (View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("Conferma modifiche");
+        alert.setMessage("Sei sicuro delle modifiche effettuate?");
+        alert.setPositiveButton("Sì!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
+                ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
+                prodotto.updateProdotto(p,p2);
+                Toast.makeText(getActivity(), "Modifiche implementate", Toast.LENGTH_SHORT).show();
+                listener.onItemClicked(true);
+            }
+        });
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getActivity(), "Modifiche non implementate", Toast.LENGTH_SHORT).show();
+                listener.onItemClicked(true);
+            }
+        });
+        alert.create().show();
+    }
+
 
     public void updateEditText(String oldName,String oldDescription){
         //editName.setText(oldName);

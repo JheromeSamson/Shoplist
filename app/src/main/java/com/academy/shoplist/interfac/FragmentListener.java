@@ -2,5 +2,6 @@ package com.academy.shoplist.interfac;
 
 public interface FragmentListener {
 
-    int onItemClicked(int position);
+    void onItemClicked(boolean ritorno);
+
 }

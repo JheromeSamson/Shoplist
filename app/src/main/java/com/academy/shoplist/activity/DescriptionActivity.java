@@ -94,7 +94,9 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
         }
 
     @Override
-    public int onItemClicked(int position) {
-        return 0;
+    public void onItemClicked(boolean ritorno) {
+        if (ritorno == true){
+            finish();
+        }
     }
 }
