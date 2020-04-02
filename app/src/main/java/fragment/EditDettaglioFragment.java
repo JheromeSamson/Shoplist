@@ -1,46 +1,55 @@
 package fragment;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.widget.Button;
-import android.widget.EditText;
+
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.academy.shoplist.activity.AddProdottoActivity;
-import com.academy.shoplist.activity.DescriptionActivity;
-import com.academy.shoplist.activity.MainActivity;
+import com.academy.shoplist.bean.ImmagineProdotto;
 import com.academy.shoplist.bean.Prodotto;
 import com.academy.shoplist.data.ShoplistDatabaseManager;
-import com.academy.shoplist.data.SingletonShopList;
-import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
-import com.academy.shoplist.util.ControlloInput;
+import com.academy.shoplist.util.DbBitMapUtility;
 import com.jherome.linx.shoplist.R;
 
-
+import static android.app.Activity.RESULT_OK;
 
 
 public class EditDettaglioFragment extends Fragment {
 
     private TextView editname;
     private TextView editDescrizione;
-
+    ImageView image;
     private int position;
     private Button confirm_Edit_Button;
     private FragmentListener listener;
-    public static Prodotto p;
+    public static Prodotto prodottoItem;
+
+    static int PReqCode =1;
+    static int REQUESTCODE = 1;
+    Uri pickedUri;
+    Bitmap bitmap;
+    byte byt[];
 
 
     @Nullable
@@ -54,16 +63,50 @@ public class EditDettaglioFragment extends Fragment {
             position = getArguments().getInt("position");
         }
 
-         p =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
+         prodottoItem =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
-        ((TextView) v.findViewById(R.id.editName)).setText(p.getNome());
-        ((TextView) v.findViewById(R.id.editDescription)).setText(p.getDescrizione());
-
+        ((TextView) v.findViewById(R.id.editName)).setText(prodottoItem.getNome());
+        ((TextView) v.findViewById(R.id.editDescription)).setText(prodottoItem.getDescrizione());
+        image = v.findViewById(R.id.img_mod);
+        byte [] rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
+        image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
         editname = (TextView) v.findViewById(R.id.editName);
         editDescrizione = (TextView) v.findViewById(R.id.editDescription);
 
-        confirm_Edit_Button = (Button) v.findViewById(R.id.confirm_edit);
 
+
+        confirm_Edit_Button = (Button) v.findViewById(R.id.confirm_edit);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 24) {
+                    checkAndRequestForPermission();
+                }
+                else {
+                    openGallery();
+                }
+            }
+
+            private void openGallery() {
+                Intent gallery = new Intent(Intent.ACTION_GET_CONTENT);
+                gallery.setType("image/*");
+                startActivityForResult(gallery, REQUESTCODE);
+            }
+
+            private void checkAndRequestForPermission() {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText( getActivity(), "ACCETTA MERDACCIA!!!", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                PReqCode );
+                    }
+                }
+                else openGallery();
+            }
+        });
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +125,19 @@ public class EditDettaglioFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
+
+              try{
+                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), pickedUri);
+                    byt = DbBitMapUtility.getBytes(bitmap);
+                }catch (Exception exception){
+
+                }
+                Prodotto p2=new Prodotto(prodottoItem.getId(), prodottoItem.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
+                ImmagineProdotto imgprodotto=new ImmagineProdotto(prodottoItem.getImmagine(),byt);
+
                 ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
-                prodotto.updateProdotto(p,p2);
-                Toast.makeText(getActivity(), "Modifiche implementate", Toast.LENGTH_SHORT).show();
-                listener.onItemClicked(true);
+                prodotto.updateProdotto(prodottoItem,p2,imgprodotto);
+
             }
         });
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -99,6 +150,17 @@ public class EditDettaglioFragment extends Fragment {
         alert.create().show();
     }
 
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == REQUESTCODE && data != null) {
+            pickedUri = data.getData();
+            image.setImageURI(pickedUri);
+        }
+    }
 
     public void updateEditText(String oldName,String oldDescription){
         //editName.setText(oldName);

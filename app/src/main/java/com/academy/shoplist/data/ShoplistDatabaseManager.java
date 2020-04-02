@@ -121,13 +121,14 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
-    public void updateProdotto(Prodotto vecchio,Prodotto nuovo){
+    public void updateProdotto(Prodotto vecchio,Prodotto nuovo,ImmagineProdotto imgprodotto){
         database.beginTransaction();
-
+        updateImmagine(imgprodotto);
         try {
             ContentValues values = new ContentValues();
             values.put(DbConstant.PRODOTTI_TABLE_NOME, nuovo.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, nuovo.getDescrizione());
+            values.put(DbConstant.PRODOTTI_TABLE_IMG,nuovo.getImmagine());
             database.update(DbConstant.PRODOTTI_TABLE, values,  "id = ?",new String []{vecchio.getId()});
 
             database.setTransactionSuccessful();
@@ -138,6 +139,25 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
+
+    public void updateImmagine(ImmagineProdotto imgprodotto){
+        database.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(DbConstant.KEY_ID, imgprodotto.getId());
+            values.put(DbConstant.KEY_IMAGE,imgprodotto.getCodImmagine());
+            database.update(DbConstant.NAME_TABLE, values,  "id_immagine = ?",new String []{imgprodotto.getId()});
+
+            database.setTransactionSuccessful();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            database.endTransaction();
+        }
+    }
+
     public void addImmagineProdotto(ImmagineProdotto img){
 
 

@@ -54,7 +54,7 @@ public class AddProdottoActivity extends AppCompatActivity {
 
 
         image = findViewById(R.id.image_add);
-
+        //image.setImageResource(R.drawable.ic_add);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

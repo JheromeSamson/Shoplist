@@ -9,8 +9,8 @@ android:gravity="center">>
             android:id="@+id/image_add"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@android:color/transparent">
-        //TODO:da fare
+        android:background="@drawable/ic_add">
+
     </ImageView>
 
 
