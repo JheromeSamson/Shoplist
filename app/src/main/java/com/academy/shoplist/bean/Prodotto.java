@@ -2,18 +2,18 @@ package com.academy.shoplist.bean;
 
 public class Prodotto {
     private String id;
-    private int immagine;
+    private String immagine;
     private String nome;
     private String descrizione;
 
-    public Prodotto(String id, int immagine, String nome, String descrizione) {
+    public Prodotto(String id, String immagine, String nome, String descrizione) {
         this.id = id;
         this.immagine = immagine;
         this.nome = nome;
         this.descrizione = descrizione;
     }
     public Prodotto(){
-        this.immagine =0;
+        this.immagine ="";
         this.nome = "default";
         this.descrizione = "default";
 
@@ -27,11 +27,11 @@ public class Prodotto {
         return id;
     }
 
-    public int getImmagine() {
+    public String getImmagine() {
         return immagine;
     }
 
-    public void setImmagine(int immagine) {
+    public void setImmagine(String immagine) {
         this.immagine = immagine;
     }
 

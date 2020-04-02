@@ -47,7 +47,6 @@ public class EditDettaglioFragment extends Fragment {
 
         if(getArguments() != null){
             position = getArguments().getInt("position");
-
         }
 
          p =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
@@ -64,8 +63,8 @@ public class EditDettaglioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
-                ShoplistDatabaseManager s=ShoplistDatabaseManager.getInstance(getActivity());
-                s.updateProdotto(p,p2);
+                ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
+                prodotto.updateProdotto(p,p2);
 
             }
         });
@@ -73,8 +72,6 @@ public class EditDettaglioFragment extends Fragment {
 
         return v;
     }
-
-
 
     public void updateEditText(String oldName,String oldDescription){
         //editName.setText(oldName);

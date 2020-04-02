@@ -4,7 +4,7 @@ public class ImmagineProdotto {
     private String id;
     private byte[] codImmagine;
 
-    public ImmagineProdotto(String id,byte[] codImmagine) {
+    public ImmagineProdotto(String id, byte[] codImmagine) {
         this.id=id;
         this.codImmagine = codImmagine;
     }
@@ -16,7 +16,6 @@ public class ImmagineProdotto {
 
     public void setCodImmagine(byte[] codImmagine) {
         this.codImmagine = codImmagine;
-
     }
 
     public String getId() {
