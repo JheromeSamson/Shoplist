@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.widget.*;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,12 +31,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddProdottoActivity extends AppCompatActivity {
-    Map<TextView,String> controlValue = new HashMap<TextView,String>();
+    Map<TextView, String> controlValue = new HashMap<TextView, String>();
 
     EditText nameView;
     EditText descriptionView;
     ImageView image;
-    static int PReqCode =1;
+    static int PReqCode = 1;
     static int REQUESTCODE = 1;
     Uri pickedUri;
     Bitmap bitmap;
@@ -49,8 +50,8 @@ public class AddProdottoActivity extends AppCompatActivity {
 
         Boolean esitoControllo;
 
-        nameView =  (EditText) findViewById(R.id.texteditName);
-        descriptionView =  (EditText) findViewById(R.id.texteditdescrizione);
+        nameView = (EditText) findViewById(R.id.texteditName);
+        descriptionView = (EditText) findViewById(R.id.texteditdescrizione);
 
 
         image = findViewById(R.id.image_add);
@@ -60,8 +61,7 @@ public class AddProdottoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 24) {
                     checkAndRequestForPermission();
-                }
-                else {
+                } else {
                     openGallery();
                 }
             }
@@ -74,16 +74,14 @@ public class AddProdottoActivity extends AppCompatActivity {
 
             private void checkAndRequestForPermission() {
                 if (ContextCompat.checkSelfPermission(AddProdottoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                    if(ActivityCompat.shouldShowRequestPermissionRationale(AddProdottoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        Toast.makeText( AddProdottoActivity.this, "ACCETTA MERDACCIA!!!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                        != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(AddProdottoActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText(AddProdottoActivity.this, "ACCETTA MERDACCIA!!!", Toast.LENGTH_SHORT).show();
+                    } else {
                         ActivityCompat.requestPermissions(AddProdottoActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                               PReqCode );
+                                PReqCode);
                     }
-                }
-                else openGallery();
+                } else openGallery();
             }
         });
 
@@ -92,26 +90,25 @@ public class AddProdottoActivity extends AppCompatActivity {
         conferma_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ControlloInput.validaInput(nameView,descriptionView).containsKey(false))
-                {
+                if (ControlloInput.validaInput(nameView, descriptionView).containsKey(false)) {
 
-                    Toast.makeText(AddProdottoActivity.this,ControlloInput.validaInput(nameView,descriptionView).get(false),Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddProdottoActivity.this, ControlloInput.validaInput(nameView, descriptionView).get(false), Toast.LENGTH_LONG).show();
 
-                }else if(ControlloInput.validaInput(nameView,descriptionView).containsKey(true)) {
+                } else if (ControlloInput.validaInput(nameView, descriptionView).containsKey(true)) {
                     Uuid uuidProdotto = new Uuid();
                     String idProdotto = uuidProdotto.generaUUID();
                     Uuid uuidImmagine = new Uuid();
                     String idImmagine = uuidImmagine.generaUUID();
 
-                    try{
+                    try {
                         bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pickedUri);
-                         byt = DbBitMapUtility.getBytes(bitmap);
+                        byt = DbBitMapUtility.getBytes(bitmap);
 
-                    } catch (Exception exception){
+                    } catch (Exception exception) {
 
                     }
                     ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addImmagineProdotto(new ImmagineProdotto(idImmagine, byt));
-                    ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(idProdotto,idImmagine,nameView.getText().toString(), descriptionView.getText().toString()));
+                    ShoplistDatabaseManager.getInstance(AddProdottoActivity.this).addProdotto(new Prodotto(idProdotto, idImmagine, nameView.getText().toString(), descriptionView.getText().toString()));
 
 
                     Intent intent = new Intent();

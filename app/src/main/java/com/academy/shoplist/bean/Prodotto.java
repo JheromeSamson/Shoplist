@@ -12,8 +12,9 @@ public class Prodotto {
         this.nome = nome;
         this.descrizione = descrizione;
     }
-    public Prodotto(){
-        this.immagine ="";
+
+    public Prodotto() {
+        this.immagine = "";
         this.nome = "default";
         this.descrizione = "default";
 

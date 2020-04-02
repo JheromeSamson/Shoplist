@@ -11,6 +11,6 @@ public class DbConstant {
 
     public static final String NAME_TABLE = "immagine";
     public static final String KEY_ID = "id_immagine";
-    public static final String KEY_IMAGE ="dataImmagine" ;
+    public static final String KEY_IMAGE = "dataImmagine";
 
 }

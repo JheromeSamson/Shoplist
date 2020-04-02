@@ -52,11 +52,7 @@ public class ShoplistDatabaseManager extends DatabaseManager {
             database.endTransaction();
         }
     }
-  /*  public void modProdotto(Prodotto prodotto)
-    {
-        ContentValues values = new ContentValues();
 
-    }*/
 
     public ArrayList<Prodotto> getProdottiByCursor(Cursor cursore) {
         ArrayList<Prodotto> listaProdotti = new ArrayList<Prodotto>();
@@ -85,20 +81,20 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         return cursore;
     }
 
-    public byte[] selectImg(String idImmagine){
-        byte[] risultatoQuery={0};
+    public byte[] selectImg(String idImmagine) {
+        byte[] risultatoQuery = {0};
 
         database.beginTransaction();
         try {
 
-            Cursor c = database.rawQuery(" SELECT " + DbConstant.KEY_IMAGE + " FROM " + DbConstant.NAME_TABLE +
-                    " WHERE " + DbConstant.KEY_ID+ " = '" + idImmagine +  "' ;",null);
-            c.moveToFirst();
-            while(!c.isAfterLast()){
-                risultatoQuery= c.getBlob(0);
-                c.moveToNext();
+            Cursor cursore = database.rawQuery(" SELECT " + DbConstant.KEY_IMAGE + " FROM " + DbConstant.NAME_TABLE +
+                    " WHERE " + DbConstant.KEY_ID + " = '" + idImmagine + "' ;", null);
+            cursore.moveToFirst();
+            while (!cursore.isAfterLast()) {
+                risultatoQuery = cursore.getBlob(0);
+                cursore.moveToNext();
             }
-                          c.close();
+            cursore.close();
 
             database.setTransactionSuccessful();
         } catch (Exception e) {
@@ -109,64 +105,65 @@ public class ShoplistDatabaseManager extends DatabaseManager {
         return risultatoQuery;
     }
 
-    public void deleteProdottoById(String id){
+    public void deleteProdottoById(String id) {
         database.beginTransaction();
         try {
             // database.delete(DbCostants.PRODOTTI_TABLE,DbCostants.PRODOTTI_TABLE_NOME,new String[]{nomeProdotto});
-            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_ID+"=?", new String[] {id}));
-                    database.setTransactionSuccessful();
+            Log.i("Elemento Eliminato ", "Numero prodotti eliminati: " + database.delete(DbConstant.PRODOTTI_TABLE, DbConstant.PRODOTTI_TABLE_ID + "=?", new String[]{id}));
+            database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             database.endTransaction();
         }
     }
-    public void updateProdotto(Prodotto vecchio,Prodotto nuovo,ImmagineProdotto imgprodotto){
+
+    public void updateProdotto(Prodotto vecchio, Prodotto nuovo, ImmagineProdotto imgprodotto) {
         database.beginTransaction();
         updateImmagine(imgprodotto);
         try {
             ContentValues values = new ContentValues();
             values.put(DbConstant.PRODOTTI_TABLE_NOME, nuovo.getNome());
             values.put(DbConstant.PRODOTTI_TABLE_DESCRIZIONE, nuovo.getDescrizione());
-            values.put(DbConstant.PRODOTTI_TABLE_IMG,nuovo.getImmagine());
-            database.update(DbConstant.PRODOTTI_TABLE, values,  "id = ?",new String []{vecchio.getId()});
+            values.put(DbConstant.PRODOTTI_TABLE_IMG, nuovo.getImmagine());
+            database.update(DbConstant.PRODOTTI_TABLE, values, "id = ?", new String[]{vecchio.getId()});
 
             database.setTransactionSuccessful();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             database.endTransaction();
         }
     }
 
-    public void updateImmagine(ImmagineProdotto imgprodotto){
+    public void updateImmagine(ImmagineProdotto imgprodotto) {
         database.beginTransaction();
 
         try {
             ContentValues values = new ContentValues();
             values.put(DbConstant.KEY_ID, imgprodotto.getId());
-            values.put(DbConstant.KEY_IMAGE,imgprodotto.getCodImmagine());
-            database.update(DbConstant.NAME_TABLE, values,  "id_immagine = ?",new String []{imgprodotto.getId()});
+            values.put(DbConstant.KEY_IMAGE, imgprodotto.getCodImmagine());
+            database.update(DbConstant.NAME_TABLE, values, "id_immagine = ?", new String[]{imgprodotto.getId()});
 
             database.setTransactionSuccessful();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             database.endTransaction();
         }
     }
 
-    public void addImmagineProdotto(ImmagineProdotto img){
+    public void addImmagineProdotto(ImmagineProdotto img) {
 
 
         try {
             database.beginTransaction();
-            ContentValues cv = new  ContentValues();
+            ContentValues cv = new ContentValues();
             cv.put(DbConstant.KEY_ID, img.getId());
-            cv.put(DbConstant.KEY_IMAGE,   img.getCodImmagine());
-            database.insert( DbConstant.NAME_TABLE, null, cv );
+            cv.put(DbConstant.KEY_IMAGE, img.getCodImmagine());
+            database.insert(DbConstant.NAME_TABLE, null, cv);
             database.setTransactionSuccessful();
         } catch (Exception e) {
             e.printStackTrace();

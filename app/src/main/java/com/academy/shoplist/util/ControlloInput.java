@@ -14,24 +14,21 @@ import com.jherome.linx.shoplist.R;
 
 public class ControlloInput {
 
-    public static HashMap<Boolean, String> validaInput(EditText et1, EditText et2)
-    {
+    public static HashMap<Boolean, String> validaInput(EditText et1, EditText et2) {
 
-        HashMap mappa=new HashMap<Boolean, String>();
+        HashMap mappa = new HashMap<Boolean, String>();
         boolean isValidato = true;
-        if ((TextUtils.isEmpty(et1.getText().toString()))&&(TextUtils.isEmpty(et2.getText().toString())))
-        {
+        if ((TextUtils.isEmpty(et1.getText().toString())) && (TextUtils.isEmpty(et2.getText().toString()))) {
             isValidato = false;
             mappa.put(isValidato, "devi inserire un nome e una descrizione");
-        }
-        else if (TextUtils.isEmpty(et1.getText().toString())) {
+        } else if (TextUtils.isEmpty(et1.getText().toString())) {
 
             isValidato = false;
             mappa.put(isValidato, "devi inserire il nome del prodotto");
-        }else if (TextUtils.isEmpty(et2.getText().toString())){
+        } else if (TextUtils.isEmpty(et2.getText().toString())) {
             isValidato = false;
             mappa.put(isValidato, "devi inserire la descrizione");
-        }else{
+        } else {
             mappa.put(isValidato, "");
         }
 

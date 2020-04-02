@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,22 +39,21 @@ public class ViewDettaglioFragment extends Fragment {
 
         name = v.findViewById(R.id.nome_stampa);
         descrizione = v.findViewById(R.id.descrizione_stampa);
-        immagine=v.findViewById(R.id.img_dettaglio);
-        if(getArguments() != null){
+        immagine = v.findViewById(R.id.img_dettaglio);
+        if (getArguments() != null) {
             position = getArguments().getInt("position");
         }
 
         Prodotto prodotto = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
-        byte [] rowImage;
+        byte[] rowImage;
 
-        if(ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine())!=null){
+        if (ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine()) != null) {
 
-        rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
-        immagine.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+            rowImage = ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
+            immagine.setImageBitmap(DbBitMapUtility.getImage(rowImage));
 
-        }
-        else{
+        } else {
             immagine.setImageResource(R.drawable.ic_add);
         }
 
@@ -62,18 +62,18 @@ public class ViewDettaglioFragment extends Fragment {
 
 
         return v;
-}
+    }
 
-    public void updateEditText(int position){
+    public void updateEditText(int position) {
 
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentListener){
+        if (context instanceof FragmentListener) {
             //listener = (FragmentListener) context;
-        }else{
+        } else {
             throw new RuntimeException(context.toString()
                     + "MUST IMPLEMENT FRAGMENTVIEWLISTENER");
         }

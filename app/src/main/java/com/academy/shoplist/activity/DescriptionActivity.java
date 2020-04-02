@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
 import com.jherome.linx.shoplist.R;
+
 import fragment.EditDettaglioFragment;
 import fragment.ViewDettaglioFragment;
 
@@ -32,13 +33,13 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
         Bundle args = new Bundle();
         args.putInt("position", position);
 
-        if (codice == Constant.VIEWITEMREQUESTCODE){
+        if (codice == Constant.VIEWITEMREQUESTCODE) {
             viewFragment = new ViewDettaglioFragment();
             viewFragment.setArguments(args);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.container,viewFragment);
+            fragmentTransaction.replace(R.id.container, viewFragment);
             fragmentTransaction.commit();
         }
 
@@ -60,42 +61,11 @@ public class DescriptionActivity extends AppCompatActivity implements FragmentLi
             }
         });
 
-
-
-
-  /*      //FragmentManager fragmentManager = getSupportFragmentManager();
-        //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        Bundle extra= getIntent().getExtras();
-
-        int codice = extra.getInt("codiceFragment");
-            TextView descriptionClickedToShow = (TextView) findViewById(R.id.descriptionClicked);
-
-        if (codice == Constant.EDITITEMREQUESTCODE){
-            editFragment = new EditDettaglioFragment();
-
-            //.add(R.id.view, viewFragment);
-            //fragmentTransaction.commit();
-        }
-
-        if (codice == Constant.VIEWITEMREQUESTCODE) {
-
-
-
-            int position=extra.getInt("position");
-
-            Prodotto p =SingletonShopList.getInstance().getProdottoByPosition(position);
-
-            TextView nameClickedToShow = (TextView) findViewById(R.id.nameClicked);
-            TextView descriptionClickedToShow = (TextView) findViewById(R.id.descriptionClicked);
-
-            nameClickedToShow.setText(p.getNome());
-            descriptionClickedToShow.setText(p.getDescrizione());*/
-        }
+    }
 
     @Override
     public void onItemClicked(boolean ritorno) {
-        if (ritorno == true){
+        if (ritorno == true) {
             finish();
         }
     }

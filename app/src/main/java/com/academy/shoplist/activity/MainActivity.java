@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayoutManager mLayout;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,37 +61,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-               // String nome_prodotto= mAdapter.prodotti.get(position).getNome();
-                    descriptionIntent.putExtra("position", position);
-                    descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
-                    startActivityForResult(descriptionIntent,Constant.VIEWITEMREQUESTCODE);
-                }
 
-                @Override
-                public void onItemDelete(int position) {
-                    //String nome_prodotto= mAdapter.prodotti.get(position).getNome();
-                    showAlertDialog(position);
-                }
+                descriptionIntent.putExtra("position", position);
+                descriptionIntent.putExtra("codiceFragment", Constant.VIEWITEMREQUESTCODE);
+                startActivityForResult(descriptionIntent, Constant.VIEWITEMREQUESTCODE);
+            }
 
-                @Override
-                public void onItemEdit(int position) {
+            @Override
+            public void onItemDelete(int position) {
+                showAlertDialog(position);
+            }
+
+            @Override
+            public void onItemEdit(int position) {
                 Intent descriptionIntent = new Intent(MainActivity.this, DescriptionActivity.class);
-                    //String nome_prodotto= mAdapter.prodotti.get(position).getNome();
+                descriptionIntent.putExtra("position", position);
+                descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
+                startActivityForResult(descriptionIntent, Constant.EDITITEMREQUESTCODE);
 
-                    descriptionIntent.putExtra("position", position);
-                    descriptionIntent.putExtra("codiceFragment", Constant.EDITITEMREQUESTCODE);
-                    startActivityForResult(descriptionIntent,Constant.EDITITEMREQUESTCODE);
+                attivaListener();
 
-                     attivaListener();
-
-                }
+            }
 
 
         });
 
     }
 
-    public void setUp(){
+    public void setUp() {
 
         mRecyclerView = findViewById(R.id.RecycleView);
         mRecyclerView.setHasFixedSize(true);
@@ -103,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void showAlertDialog(final int position){
+
+    public void showAlertDialog(final int position) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Conferma eliminazione");
         alert.setMessage("Sei sicuro di voler eliminare il prodotto:" + mAdapter.prodotti.get(position).getNome() + "?");
@@ -119,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
-                Toast.makeText(MainActivity.this, mAdapter.prodotti.get(position).getNome()+ "non è stato eliminato.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, mAdapter.prodotti.get(position).getNome() + "non è stato eliminato.", Toast.LENGTH_SHORT).show();
             }
         });
         alert.create().show();

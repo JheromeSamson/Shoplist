@@ -64,8 +64,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
-
     private void dropAllTable(SQLiteDatabase database) {
         Log.d("createDatabase", "DROP ALL TABLES");
     }

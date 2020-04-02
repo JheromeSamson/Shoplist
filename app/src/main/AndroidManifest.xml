@@ -17,7 +17,7 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name="com.academy.shoplist.activity.AddProdottoActivity"
-               />
+                  android:screenOrientation="portrait"/>
         <activity android:name="com.academy.shoplist.activity.MainActivity"
                   android:screenOrientation="portrait">
             <intent-filter>

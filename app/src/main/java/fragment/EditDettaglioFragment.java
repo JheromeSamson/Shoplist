@@ -44,9 +44,9 @@ public class EditDettaglioFragment extends Fragment {
     private Button confirm_Edit_Button;
     private FragmentListener listener;
     public static Prodotto prodottoItem;
-public  byte[] rowImage;
+    public byte[] rowImage;
     public ImmagineProdotto imgprodotto;
-    static int PReqCode =1;
+    static int PReqCode = 1;
     static int REQUESTCODE = 1;
     Uri pickedUri;
     Bitmap bitmap;
@@ -60,24 +60,23 @@ public  byte[] rowImage;
 
         View v = inflater.inflate(R.layout.fragment_edit, container, false);
 
-        if(getArguments() != null){
+        if (getArguments() != null) {
             position = getArguments().getInt("position");
         }
 
-         prodottoItem =ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
+        prodottoItem = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
         ((TextView) v.findViewById(R.id.editName)).setText(prodottoItem.getNome());
         ((TextView) v.findViewById(R.id.editDescription)).setText(prodottoItem.getDescrizione());
         image = v.findViewById(R.id.img_mod);
-         rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
-         if(rowImage != null) {
-             image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
-         }else {
-             image.setImageResource(R.drawable.ic_add);
-         }
+        rowImage = ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodottoItem.getImmagine());
+        if (rowImage != null) {
+            image.setImageBitmap(DbBitMapUtility.getImage(rowImage));
+        } else {
+            image.setImageResource(R.drawable.ic_add);
+        }
         editname = (TextView) v.findViewById(R.id.editName);
         editDescrizione = (TextView) v.findViewById(R.id.editDescription);
-
 
 
         confirm_Edit_Button = (Button) v.findViewById(R.id.confirm_edit);
@@ -86,8 +85,7 @@ public  byte[] rowImage;
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 24) {
                     checkAndRequestForPermission();
-                }
-                else {
+                } else {
                     openGallery();
                 }
             }
@@ -101,15 +99,13 @@ public  byte[] rowImage;
             private void checkAndRequestForPermission() {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
-                    if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        Toast.makeText( getActivity(), "ACCETTA MERDACCIA!!!", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText(getActivity(), "ACCETTA MERDACCIA!!!", Toast.LENGTH_SHORT).show();
+                    } else {
                         ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                                PReqCode );
+                                PReqCode);
                     }
-                }
-                else openGallery();
+                } else openGallery();
             }
         });
         confirm_Edit_Button.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +118,8 @@ public  byte[] rowImage;
 
         return v;
     }
-    public void AlertDialog (View v){
+
+    public void AlertDialog(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
         alert.setTitle("Conferma modifiche");
         alert.setMessage("Sei sicuro delle modifiche effettuate?");
@@ -137,14 +134,14 @@ public  byte[] rowImage;
                 } catch (Exception exception) {
 
                 }
-                Prodotto p2 = new Prodotto(prodottoItem.getId(), prodottoItem.getImmagine(), editname.getText().toString(), editDescrizione.getText().toString());
+                Prodotto nuovoProdotto = new Prodotto(prodottoItem.getId(), prodottoItem.getImmagine(), editname.getText().toString(), editDescrizione.getText().toString());
                 if (byt != null) {
                     imgprodotto = new ImmagineProdotto(prodottoItem.getImmagine(), byt);
-                } else{
-                 imgprodotto=new ImmagineProdotto(prodottoItem.getImmagine(),rowImage);
-            }
-                ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
-                prodotto.updateProdotto(prodottoItem,p2,imgprodotto);
+                } else {
+                    imgprodotto = new ImmagineProdotto(prodottoItem.getImmagine(), rowImage);
+                }
+                ShoplistDatabaseManager prodotto = ShoplistDatabaseManager.getInstance(getActivity());
+                prodotto.updateProdotto(prodottoItem, nuovoProdotto, imgprodotto);
                 Toast.makeText(getActivity(), "Modifiche implementate", Toast.LENGTH_SHORT).show();
                 listener.onItemClicked(true);
             }
@@ -161,7 +158,6 @@ public  byte[] rowImage;
     }
 
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,19 +168,19 @@ public  byte[] rowImage;
         }
     }
 
-    public void updateEditText(String oldName,String oldDescription){
+    public void updateEditText(String oldName, String oldDescription) {
         //editName.setText(oldName);
         //editDescription.setText(oldDescription);
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof FragmentListener){
+        if (context instanceof FragmentListener) {
             listener = (FragmentListener) context;
-        }else{
+        } else {
             throw new RuntimeException(context.toString()
-            + "MUST IMPLEMENT FRAGMENTEDITLISTENER");
+                    + "MUST IMPLEMENT FRAGMENTEDITLISTENER");
         }
     }
 
