@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.academy.shoplist.activity.AddProdottoActivity;
 import com.academy.shoplist.activity.DescriptionActivity;
 import com.academy.shoplist.activity.MainActivity;
 import com.academy.shoplist.bean.Prodotto;
@@ -22,6 +24,7 @@ import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.data.SingletonShopList;
 import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
+import com.academy.shoplist.util.ControlloInput;
 import com.jherome.linx.shoplist.R;
 
 
@@ -65,6 +68,7 @@ public class EditDettaglioFragment extends Fragment {
                 Prodotto p2=new Prodotto(p.getId(),p.getImmagine(),editname.getText().toString(),editDescrizione.getText().toString());
                 ShoplistDatabaseManager prodotto=ShoplistDatabaseManager.getInstance(getActivity());
                 prodotto.updateProdotto(p,p2);
+                Toast.makeText(getActivity(), "modifiche salvate",Toast.LENGTH_LONG).show();
 
             }
         });

@@ -104,8 +104,14 @@ public class ProdottoAdapter extends RecyclerView.Adapter<ProdottoAdapter.Prodot
     @Override
     public void onBindViewHolder(@NonNull ProdottoViewHolder holder, int position) {
         Prodotto prodottoCorrente=prodotti.get(position);
-        byte [] a= ShoplistDatabaseManager.getInstance(null).selectImg(prodottoCorrente.getImmagine());
-        holder.img_immagine_prodotto.setImageBitmap(DbBitMapUtility.getImage(a));
+      if(ShoplistDatabaseManager.getInstance(null).selectImg(prodottoCorrente.getImmagine())!=null) {
+            byte[] a = ShoplistDatabaseManager.getInstance(null).selectImg(prodottoCorrente.getImmagine());
+            holder.img_immagine_prodotto.setImageBitmap(DbBitMapUtility.getImage(a));
+        }else
+      {
+          holder.img_immagine_prodotto.setImageResource(R.drawable.ic_add);
+      }
+
         holder.textView_nomeProdotto.setText(prodottoCorrente.getNome());
         holder.textView_descrizioneProdotto.setText(prodottoCorrente.getDescrizione());
     }
