@@ -70,6 +70,7 @@ public class EditDettaglioFragment extends Fragment {
                 prodotto.updateProdotto(p,p2);
                 Toast.makeText(getActivity(), "modifiche salvate",Toast.LENGTH_LONG).show();
 
+
             }
         });
 

@@ -11,11 +11,15 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/app_icon_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name="com.academy.shoplist.activity.DescriptionActivity">
+            android:theme="@style/AppTheme"
+            >
+        <activity android:name="com.academy.shoplist.activity.DescriptionActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.academy.shoplist.activity.AddProdottoActivity"/>
-        <activity android:name="com.academy.shoplist.activity.MainActivity">
+        <activity android:name="com.academy.shoplist.activity.AddProdottoActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name="com.academy.shoplist.activity.MainActivity"
+                  android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
