@@ -45,11 +45,11 @@ public class ViewDettaglioFragment extends Fragment {
 
         Prodotto prodotto = ShoplistDatabaseManager.getInstance(getActivity()).getProdottiByCursor(ShoplistDatabaseManager.getInstance(getActivity()).getAllProdotti()).get(position);
 
-        byte [] a=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
+        byte [] rowImage=ShoplistDatabaseManager.getInstance(getActivity()).selectImg(prodotto.getImmagine());
 
         name.setText(prodotto.getNome());
         descrizione.setText(prodotto.getDescrizione());
-        immagine.setImageBitmap(DbBitMapUtility.getImage(a));
+        immagine.setImageBitmap(DbBitMapUtility.getImage(rowImage));
         return v;
 }
 
