@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.academy.shoplist.activity.AddProdottoActivity;
 import com.academy.shoplist.activity.DescriptionActivity;
 import com.academy.shoplist.activity.MainActivity;
 import com.academy.shoplist.bean.Prodotto;
@@ -25,6 +26,7 @@ import com.academy.shoplist.data.ShoplistDatabaseManager;
 import com.academy.shoplist.data.SingletonShopList;
 import com.academy.shoplist.intentConstant.Constant;
 import com.academy.shoplist.interfac.FragmentListener;
+import com.academy.shoplist.util.ControlloInput;
 import com.jherome.linx.shoplist.R;
 
 
